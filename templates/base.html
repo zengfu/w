@@ -15,7 +15,7 @@
                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Pokaż lub ukryj nawigację">
                      <span class="navbar-toggler-icon"></span>
                  </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="{% static "image/logo1654x1654.png" %}" width="32" height="32" class="d-inline-block align-top rounded" alt="idź na start webroad.pl">
                     WhyEngineer
                 </a>
@@ -39,7 +39,7 @@
 					            Software
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                                <a class="dropdown-item" href="/mqtt">MQTT</a>
+                                <a class="dropdown-item" href="{% url "mqtt" %}">MQTT</a>
                                 <a class="dropdown-item" href="#">Dog-Tunnel</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">Waiting...</a>

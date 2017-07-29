@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.views.decorators.csrf import csrf_exempt
 import json
+import httplib
 
 from django.shortcuts import render
 
@@ -13,6 +14,8 @@ def hello(request):
 
 def index(request):
     return render(request, "index.html")
+def mqtt(request):
+    return render(request,"mqtt.html")
 
 @csrf_exempt
 def login_view(request):
@@ -51,3 +54,10 @@ def mysession(request):
         result_json = {'result': res}
     print json.dumps(result_json)
     return HttpResponse(json.dumps(result_json), content_type='application/json')
+def getmqttclient(request):
+    conn=httplib.HTTPConnection("127.0.0.1",1885)
+    conn.request("GET","/api/allmqtt")
+    res=conn.getresponse()
+    data=res.read()
+    print data
+    return HttpResponse(data)

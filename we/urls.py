@@ -19,9 +19,10 @@ import auth.views as auth
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^hello/$', auth.hello),
+    url(r'^mqtt/$', auth.mqtt,name='mqtt'),
     url(r'^$', auth.index),
     url(r'^api/logout/$',auth.logout_view),
     url(r'^api/login/$',auth.login_view),
     url(r'^api/checksession/$',auth.mysession),
+    url(r'^api/allmqtt/$',auth.getmqttclient),
 ]

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <div class="container">
+        <div>
+            <p style="color: #625;font-size: 20px"><br>
+            &ensp;&ensp;MQTT is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport. It is useful for connections with remote locations where a small code footprint is required and/or network bandwidth is at a premium. For example, it has been used in sensors communicating to a broker via satellite link, over occasional dial-up connections with healthcare providers, and in a range of home automation and small device scenarios. It is also ideal for mobile applications because of its small size, low power usage, minimised data packets, and efficient distribution of information to one or many receivers.</p>
+        </div>
+        <h3 style="color:#625">Server port:1883</h3>
+        <div class="alert alert-info" role="alert">
+          <strong>Note:</strong>
+          <div>The connect packet must contain the username and password!</div>
+        </div>
+        <div class="alert alert-success" role="alert">
+          <strong>Test account:</strong>
+          <div><strong>username:</strong> test <strong>password:</strong> 12345678</div>
+        </div>
+	    <h3 style="color:#625">Online Clients:</h3>
+	    <textarea style="width: 100%;height: 250px" id="online" disabled=""></textarea>
+	    <h3 style="color:#625">Create Client:</h3>
+        <div class="form-inline">
+          <label class="sr-only" for="inlineFormInput">Name</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="mqttname" placeholder="Mqtt username">
+          <label class="sr-only" for="inlineFormInputGroup">Password</label>
+          <input type="password" class="form-control" id="mqttpw" placeholder="password">
+          <button class="btn btn-primary" id="mqtt_connect">Connect</button>
+          <div id="mqtt_info" style="color: red"></div>
+        </div>
+	    <br>
+	    <h3 style="color:#625">Sub/Pub Topic:</h3>
+        <div class="form-inline">
+          <label class="sr-only" for="inlineFormInput">Topic</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="sub_c" placeholder="subscribe topic" disabled>
+          <input class="form-control col-1" type="number" value="0" id="sub_q" min="0" max="2" disabled="">
+          <button class="btn btn-primary" id="sub_b" disabled="">Subscribe</button>
+        </div>
+	    <br>
+        <div class="form-inline">
+          <label class="sr-only" for="inlineFormInput">Topic</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="pub_c" placeholder="publish topic"  disabled>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="pub_p" placeholder="publish payload"  disabled>
+          <input class="form-control col-1" type="number" value="0" id="pub_q" min="0" max="2" disabled>
+          <button class="btn btn-primary" id="pub_b" disabled>Publish</button>
+        </div>
+	    <br>
+	    <h3 style="color:#625">Log Windows:</h3>
+	    <textarea style="width: 100%;height: 250px" id="log" disabled=""></textarea>
+    </div>
+    <script type="text/javascript">
+        setInterval(function(){
+            $.ajax({
+                      type: 'GET',
+                      url: "/api/allmqtt/",
+                      }).done(function(data){
+                        $('#online').text(data)
+                      });
+        },2000);
+        var clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
+        var host = 'wss://www.whyengineer.com:1884';
+        var connect=false;
+        var client;
+        $('#mqtt_connect').click(function(event) {
+            /* Act on the event */
+            var options = {
+              keepalive: 10,
+              clientId: clientId,
+              protocolId: 'MQTT',
+              protocolVersion: 4,
+              clean: true,
+              reconnectPeriod: 1000,
+              connectTimeout: 2 * 1000,
+              username: $('#mqttname').val(),
+              password: $('#mqttpw').val(),
+              rejectUnauthorized: false
+            };
+            if(connect){
+                $(this).text("Connect");
+                $(this).addClass('btn-primary');
+                $(this).removeClass('btn-danger');
+                $('#mqttname').removeAttr('attribute disabled');
+                $('#mqttpw').removeAttr('disabled');
+                $('#sub_c').attr('disabled', 'true');
+                $('#sub_q').attr('disabled', 'true');
+                $('#sub_b').attr('disabled', 'true');
+                $('#pub_c').attr('disabled', 'true');
+                $('#pub_p').attr('disabled', 'true');
+                $('#pub_q').attr('disabled', 'true');
+                $('#pub_b').attr('disabled', 'true');
+                client.end();
+                connect=false
+            }else {
+                client = mqtt.connect(host, options);
+                client.on('error', function (err) {
+                    $('#mqtt_info').text(err);
+                    $(this).text("Connect");
+                    $(this).addClass('btn-primary');
+                    $(this).removeClass('btn-danger');
+                    $('#mqttname').removeAttr('attribute disabled');
+                    $('#mqttpw').removeAttr('disabled');
+                    connect = false;
+                    client.end();
+                });
+                client.on('connect', function () {
+                    $('#mqtt_info').text('');
+                    $('#mqttname').attr('disabled', 'true');
+                    $('#mqttpw').attr('disabled', 'true');
+                    connect = true;
+                    $('#mqtt_connect').text("Disonnect");
+                    $('#mqtt_connect').removeClass('btn-primary');
+                    $('#mqtt_connect').addClass('btn-danger');
+                    $('#sub_b').removeAttr('disabled');
+                    $('#sub_c').removeAttr('disabled');
+                    $('#sub_q').removeAttr('disabled');
+                    $('#pub_b').removeAttr('disabled');
+                    $('#pub_c').removeAttr('disabled');
+                    $('#pub_q').removeAttr('disabled');
+                    $('#pub_p').removeAttr('disabled');
+                    $('#log').text(formatTime(new Date().getTime() / 1000) + ': client connected:' + clientId);
+                    console.log('client connected:' + clientId)
+                });
+                client.on('message', function (topic, message, packet) {
+                    var content = $('#log').text();
+                    $('#log').text(content + '\n' + formatTime(new Date().getTime() / 1000) + ': Received Message:= ' + message.toString() + ' from topic:= ' + topic)
+
+                });
+
+            }
+        });
+        $('#sub_b').click(function(event) {
+            /* Act on the event */
+            client.subscribe($('#sub_c').val(), { qos: parseInt($('#sub_q').val())});
+            var content=$('#log').text();
+            $('#log').text(content+'\n'+formatTime(new Date().getTime()/1000)+': Subscribe topic:' + $('#sub_c').val())
+        });
+        $('#pub_b').click(function(event) {
+            /* Act on the event */
+            client.publish($('#pub_c').val(),$('#pub_p').val(),{ qos: parseInt($('#pub_q').val()),retain: false });
+            var content=$('#log').text()
+            $('#log').text(content+'\n'+formatTime(new Date().getTime()/1000)+': Publish topic:' + $('#pub_c').val()+' payload:'+$('#pub_p').val())
+        });
+        var formatTime = function (unixTimestamp) {
+                    var dt = new Date(unixTimestamp * 1000);
+                    var hours = dt.getHours();
+                    var minutes = dt.getMinutes();
+                    var seconds = dt.getSeconds();
+                    // the above dt.get...() functions return a single digit
+                    // so I prepend the zero here when needed
+                    if (hours < 10)
+                        hours = '0' + hours;
+                    if (minutes < 10)
+                        minutes = '0' + minutes;
+                    if (seconds < 10)
+                        seconds = '0' + seconds;
+                    return hours + ":" + minutes + ":" + seconds;
+                }
+	</script>
+{% endblock %}
