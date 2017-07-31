@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div style="height: 100px">
+    </div>
+    <div class="container">
+
+
+        <form id="signin" action="/">
+            {{ csrf_input }}
+            <div class="form-group" id="username_group">
+                <div class="row">
+                  <label for="text-input" class="offset-sm-2 col-sm-2 col-form-label">Username:</label>
+                  <div class="col-6">
+                    <input class="form-control form-control-success form-control-warning" type="text"  id="text-input" name="username">
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="form-control-feedback offset-sm-2 col-sm-8" style="text-align: right;" hidden="true" id="username_info">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="email_group">
+                <div class="row">
+                  <label for="email-input" class="offset-sm-2 col-sm-2 col-form-label">Email:</label>
+                  <div class="col-6">
+                    <input class="form-control form-control-success form-control-warning" type="email"  id="email-input" name="email">
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="form-control-feedback offset-sm-2 col-sm-8" style="text-align: right;" hidden="true" id="email_info">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="pw1_group">
+                <div class="row">
+                  <label for="pw1-input" class="offset-sm-2 col-sm-2 col-form-label">Password:</label>
+                  <div class="col-6">
+                    <input class="form-control form-control-success form-control-warning" type="password"  id="pw1-input" name="password1">
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="form-control-feedback offset-sm-2 col-sm-8" style="text-align: right;" hidden="true" id="pw1_info">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="pw2_group">
+                <div class="row">
+                  <label for="pw2-input" class="offset-sm-2 col-sm-2 col-form-label">Password again:</label>
+                  <div class="col-6">
+                    <input class="form-control form-control-success form-control-warning" type="password"  id="pw2-input" name="password2">
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="form-control-feedback offset-sm-2 col-sm-8" style="text-align: right;" hidden="true" id="pw2_info">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-sm-8 col-sm-2" style="text-align: right">
+                <button class="btn btn-primary" id="register_submit">Submit</button>
+              </div>
+            </div>
+
+        </form>
+        <div id="success" style="text-align: center;" hidden="true">
+            <h1>Register successful!</h1>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var username=false;
+        var password=false;
+        var email=false;
+		$('#backtohome').click(function(event) {
+			/* Act on the event */
+			 $(window.location).attr('href', '/');
+		});
+		$('#text-input').focusout(function(event) {
+			/* Act on the event */
+			console.log($(this).val());
+			if ( $(this).val().length === 0){
+				$("#username_group").removeClass('has-success');
+				$("#username_group").addClass('has-warning');
+				$('#username_info').text('the username is empty');
+				$('#username_info').removeAttr('hidden');
+				username=false;
+				return
+			}
+			$.ajax({
+				  type: 'POST',
+				  url: "/api/checkusername/",
+				  data: $(this).serialize(),
+				  dataType : "json"}).done(function(data){
+				  	if(data.result==0){
+				  		$("#username_group").removeClass('has-warning');
+				  		$("#username_group").addClass('has-success');
+				  		$('#username_info').attr('hidden','true');
+				  		username=true
+				  	}else{
+				  		$("#username_group").removeClass('has-success');
+				  		$("#username_group").addClass('has-warning');
+				  		$('#username_info').text('the username exited');
+				  		$('#username_info').removeAttr('hidden');
+				  		username=false
+				  	}
+				  });
+		});
+		$('#email-input').focusout(function(event) {
+			/* Act on the event */
+			console.log($(this).val());
+			var search_str= /^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/;
+			var email_val=$(this).val();
+			if((!search_str.test(email_val))){
+				//$(this).focus();
+				$("#email_group").removeClass('has-success');
+				$("#email_group").addClass('has-warning');
+				$('#email_info').text('the email format is error');
+				$('#email_info').removeAttr('hidden');
+				email=false
+			}else{
+				$("#email_group").removeClass('has-warning');
+				$("#email_group").addClass('has-success');
+				$('#email_info').attr('hidden','true');
+				email=true;
+			}
+		});
+		$('#pw1-input').focusout(function(event) {
+			/* Act on the event */
+			if ( $(this).val().length === 0){
+				$("#pw1_group").removeClass('has-success');
+				$("#pw1_group").addClass('has-warning');
+				$('#pw1_info').text('the password is empty');
+				$('#pw1_info').removeAttr('hidden');
+				return;
+			}else{
+				$("#pw1_group").removeClass('has-warning');
+				$("#pw1_group").addClass('has-success');
+				$('#pw1_info').attr('hidden','true');
+				console.log(username,email)
+			}
+		});
+		$('#pw2-input').focusout(function(event) {
+			/* Act on the event */
+			if ( $(this).val().length === 0){
+				$("#pw2_group").removeClass('has-success');
+				$("#pw2_group").addClass('has-warning');
+				$('#pw2_info').text('the password is empty');
+				$('#pw2_info').removeAttr('hidden');
+				return
+			}else{
+				if($(this).val()==$('#pw1-input').val()){
+					$("#pw2_group").removeClass('has-warning');
+					$("#pw2_group").addClass('has-success');
+					$('#pw2_info').attr('hidden','true');
+					password=true;
+				}else{
+					$("#pw2_group").removeClass('has-success');
+					$("#pw2_group").addClass('has-warning');
+					$('#pw2_info').text('the password is different');
+					$('#pw2_info').removeAttr('hidden');
+				}
+			}
+		});
+		$('#register_submit').click(function() {
+		    event.preventDefault();
+			if(email&&password&&username){
+				$.ajax({
+				  type: 'POST',
+				  url: "/api/signin/",
+				  data: $('#signin').serialize(),
+				  dataType : "json"})
+		    	  .done(function( data ) {
+		    	  	$('#signin').hide();
+		    	  	$('#success').removeAttr('hidden');
+		    	  	setInterval(function(){
+                       $(window.location).attr('href', '/');
+                    },1000);
+		    	  	//$(window.location).attr('href', '/').delay(2000)
+		    	  });
+			}else{
+				return;
+			}
+		});
+		//$("#userinfo").hide()
+	</script>
+{% endblock %}

@@ -24,5 +24,9 @@ urlpatterns = [
     url(r'^api/logout/$',auth.logout_view),
     url(r'^api/login/$',auth.login_view),
     url(r'^api/checksession/$',auth.mysession),
+    url(r'^api/checkusername/$',auth.api_checkusername),
     url(r'^api/allmqtt/$',auth.getmqttclient),
+    url(r'^register/$',auth.register,name="register"),
+    url(r'^api/signin/$',auth.api_signin),
+
 ]

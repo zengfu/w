@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 import json
 import httplib
@@ -21,7 +22,6 @@ def mqtt(request):
 def login_view(request):
     username=request.POST['username']
     password=request.POST['password']
-    print username,password
     user=authenticate(username=username,password=password)
     res=0
     if user is not None:
@@ -52,12 +52,31 @@ def mysession(request):
     else:
         res = 1
         result_json = {'result': res}
-    print json.dumps(result_json)
     return HttpResponse(json.dumps(result_json), content_type='application/json')
 def getmqttclient(request):
     conn=httplib.HTTPConnection("127.0.0.1",1885)
     conn.request("GET","/api/allmqtt")
     res=conn.getresponse()
     data=res.read()
-    print data
     return HttpResponse(data)
+def register(request):
+    return render(request, "register.html")
+
+@csrf_exempt
+def api_checkusername(request):
+    name=request.POST['username']
+    try:
+        User.objects.get(username=name)
+    except User.DoesNotExist:
+        res=0
+    else:
+        res=1
+    return HttpResponse(json.dumps({'result': res}), content_type='application/json')
+
+@csrf_exempt
+def api_signin(request):
+    username = request.POST['username']
+    password = request.POST['password1']
+    email=request.POST['email']
+    User.objects.create_user(username,email,password)
+    return HttpResponse(json.dumps({'result': 0}), content_type='application/json')

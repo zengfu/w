@@ -7,6 +7,7 @@
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <script src="{% static "js/mycookie.js" %}"></script>
     <title>{% block title %}WhyEngineer{% endblock %}</title>
+    <Link href="{% static "image/logo240x240.png" %}" rel="icon">
 </head>
 <body>
     {% block navbar %}
@@ -74,7 +75,7 @@
                                                 <div id="passwordinfo" class="form-control-feedback"></div>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="/register">Register</a>
+                                                <a href="{% url "register" %}">Register</a>
                                                 <button type="button" class="btn btn-primary" type="submit" id="submit">Login</button>
                                             </div>
                                             {{ csrf_input }}
@@ -149,7 +150,7 @@
                       data: $('#loginform').serialize(),
                       dataType : "json"})
                       .done(function( data ) {
-                        console.log(data)
+                        console.log(data);
                         if(data.result==0){
                             $('#modal_close').trigger('click');
                             $('#login').hide();
