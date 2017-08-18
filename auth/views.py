@@ -17,6 +17,8 @@ def index(request):
     return render(request, "index.html")
 def mqtt(request):
     return render(request,"mqtt.html")
+def esp32(request):
+    return render(request, "esp32.html")
 
 @csrf_exempt
 def login_view(request):

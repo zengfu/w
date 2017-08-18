@@ -30,7 +30,7 @@
                                 Hardware
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                                <a class="dropdown-item" href="#">ESP32</a>
+                                <a class="dropdown-item" href="{% url "esp32" %}">ESP32</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">Waiting...</a>
                             </div>
@@ -41,7 +41,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                                 <a class="dropdown-item" href="{% url "mqtt" %}">MQTT</a>
-                                <a class="dropdown-item" href="#">Dog-Tunnel</a>
+                                <a class="dropdown-item disabled" href="#">Dog-Tunnel</a>
+                                <a class="dropdown-item disabled" href="#">Ngrok</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">Waiting...</a>
                             </div>
@@ -173,6 +174,14 @@
     {% block content %}{% endblock %}
 
     {% block footer %}
+        <div style="background-color: #081317;height: 100px">
+            <div class="container">
+                <div class="row" style="vertical-align: middle;line-height: 60px">
+                    <p class="col-sm-3 offset-sm-9" style="color: white">frankie.zengfu@gmail.com</p>
+                </div>
+            </div>
+
+        </div>
     {% endblock %}
 </body>
 </html>

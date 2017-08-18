@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^api/checkusername/$',auth.api_checkusername),
     url(r'^api/allmqtt/$',auth.getmqttclient),
     url(r'^register/$',auth.register,name="register"),
+    url(r'^esp32/$',auth.esp32,name="esp32"),
     url(r'^api/signin/$',auth.api_signin),
 
 ]

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="{% static "js/mycookie.js" %}"></script>
+    <title>{% block title %}WhyEngineer{% endblock %}</title>
+    <Link href="{% static "image/logo240x240.png" %}" rel="icon">
+</head>
+<body>
+    <div style=" background-color: #081317">
+        <a href="/" class="btn btn-outline-secondary" style="margin: 10px">HOME</a>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <img src="{% static "image/esp32_480x480.png" %}">
+            </div>
+            <div class="row justify-content-md-center">
+                <a href="https://github.com/whyengineer/esp32" class="btn btn-outline-secondary col-sm-2" style="margin: 20px;text-align: center" ><i class="fa fa-github fa-lg"></i> Github</a>
+                <a href="https://wiki.whyengineer.com" class="btn btn-outline-secondary col-sm-2" style="margin: 20px;text-align: center"><i class="fa fa-wikipedia-w fa-lg"></i> Wiki</a>
+                <a href="https://item.taobao.com/item.htm?id=557325579696" class="btn btn-outline-secondary col-sm-2" style="margin: 20px;text-align: center" ><i class="fa fa-shopping-cart fa-lg"></i> Taobao</a>
+            </div>
+
+        </div>
+    </div>
+    <h2 style="color:black;padding-left: 100px;padding: 50px" class="display-4">SOFTWARE</h2>
+    <div id="accordion" role="tablist" aria-multiselectable="true" class="container">
+      <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+          <h5 class="mb-0">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Telnet+FreeRtos_CLI
+            </a>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="card-block row">
+             <img src="{% static "image/telnet.png" %}" class="col-sm-8">
+              <div class="col-sm-4" style="padding: 50px;font-size: 20px" >FreeRTOS+CLI (Command Line Interface) provides a simple, small, extensible and RAM efficient method of enabling your FreeRTOS application to process command line input.
+                <ul style="padding: 25px">
+                  <li>help</li>
+                  <li>listtask</li>
+                  <li>mqtt_sub</li>
+                  <li>mqtt_pub</li>
+                  <li>..still updating..</li>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+          <h5 class="mb-0">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Mqtt Client+CMD Control
+            </a>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="card-block" style="font-size: 20px;padding: 10px">
+                MQTT is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.
+              <div class="row justify-content-md-center">
+                  <img src="{% static "image/mqtt_pub.png" %}" class="col-sm-5">
+                  <img src="{% static "image/mqtt_sub.png" %}" class="col-sm-5">
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" role="tab" id="headingThree">
+          <h5 class="mb-0">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Bluetooth Audio
+            </a>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="card-block" style="font-size: 20px;padding: 10px">
+              The Esp32 Realised Advanced Audio Distribution Profile (A2DP), 44.1K, 16bits, Stereo Audio.
+              <div class="row justify-content-md-center">
+                   <i class="fa fa-bluetooth fa-5x col-sm-4" style="text-align: center"></i>
+                   <i class="fa fa-plus-circle fa-5x col-sm-4" style="text-align: center"></i>
+                   <i class="fa fa-bullhorn fa-5x col-sm-4" style="text-align: center"></i>
+              </div>
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" role="tab" id="headingFour">
+          <h5 class="mb-0">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              Web Radio
+            </a>
+          </h5>
+        </div>
+        <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="card-block" style="font-size: 20px;padding: 10px">
+              Http Mp3 Stream Decode, Todo......
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" role="tab" id="headingFive">
+          <h5 class="mb-0">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              BLE Gateway
+            </a>
+          </h5>
+        </div>
+        <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="card-block" style="font-size: 20px;padding: 10px">
+              Ble Device To Internet, Dongle, Todo......
+          </div>
+        </div>
+      </div>
+         <blockquote class="blockquote" style="margin: 50px">
+             More Features are waiting you! Fork The <a href="https://github.com/whyengineer/esp32">Github</a> Repo And Pull Request!
+         </blockquote>
+    </div>
+        <div>
+            <h2 style="color:black;padding-left: 100px;padding: 50px" class="display-4">
+                          HARDWARE</h2>
+            <div class="container">
+                <table class="table  table-bordered">
+                      <tbody>
+                            <tr>
+                                  <th scope="row">CPU</th>
+                                  <td>240 MHz dual core Tensilica LX6 microcontroller with 600 DMIPS</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">RAM</th>
+                                  <td>Integrated 520 KB SRAM</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">FLASH</th>
+                                  <td>External 4MB SPI FLASH</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">CODEC</th>
+                                  <td>WM8978: DAC SNR 98dB, THD -84dB, ADC SNR 90dB, THD -80dB </td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">MAC PHY</th>
+                                  <td>LAN8720: RMII 10/100 Ethernet, Auto-negotiation</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">USB-UART</th>
+                                  <td>CP2104:Baud rates: 300 bps to 2 Mbits,576 byte receive buffer, 576 byte transmit buffer</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">SD</th>
+                                  <td>4-bit SDIO transfer modes over the full clock range of 0 to 50MHZ</td>
+                            </tr>
+                      </tbody>
+                    </table>
+            </div>
+
+            <h2 style="color:black;padding-left: 100px;padding: 50px" class="display-4">WIRELESS</h2>
+            <div class="container">
+                    <table class="table  table-bordered">
+                      <tbody>
+                            <tr>
+                                  <th scope="row">WIFI</th>
+                                  <td>Integrated 802.11 b/g/n HT40 Wi-Fi transceiver, baseband, stack and LWIP</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">BLUETOOTH</th>
+                                  <td>Integrated dual mode Bluetooth (classic and BLE)</td>
+                            </tr>
+                            <tr>
+                                  <th scope="row">PERFORMANCE</th>
+                                  <td>Max data rate of 150 Mbps@11n HT40, 72 Mbps@11n HT20, 54 Mbps@11g, and 11 Mbps@11b</td>
+                            </tr>
+                      </tbody>
+                    </table>
+            </div>
+        </div>
+
+    <div style="background-color: #081317;height: 100px">
+            <div class="container">
+                <div class="row" style="vertical-align: middle;line-height: 84px">
+                    <p class="col-sm-3 offset-sm-9" style="color: white">frankie.zengfu@gmail.com</p>
+                </div>
+            </div>
+    </div>
+{#    <canvas style="position: absolute;top:640px;left: 0px;width: 100%;height:100%;pointer-events: none"></canvas>#}
+    <script>
+                document.addEventListener('touchmove', function (e) {
+                e.preventDefault()
+            });
+            setInterval(function () {
+                i();
+            },10000);
+            var c = document.getElementsByTagName('canvas')[0],
+                x = c.getContext('2d'),
+                pr = window.devicePixelRatio || 1,
+                w = window.innerWidth,
+                h = window.innerHeight,
+                //h=480,
+                f = 90,
+                q,
+                m = Math,
+                r = 0,
+                u = m.PI*2,
+                v = m.cos,
+                z = m.random;
+            c.width = w*pr;
+            c.height = h*pr;
+            x.scale(pr, pr);
+            x.globalAlpha = 0.6;
+            function i(){
+                x.clearRect(0,0,w,h);
+                q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}];
+                while(q[1].x<w+f) d(q[0], q[1])
+            }
+            function d(i,j){
+                x.beginPath();
+                x.moveTo(i.x, i.y);
+                x.lineTo(j.x, j.y);
+                var k = j.x + (z()*2-0.25)*f,
+                    n = y(j.y);
+                x.lineTo(k, n);
+                x.closePath();
+                r-=u/-50;
+                x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16);
+                x.fill();
+                q[0] = q[1];
+                q[1] = {x:k,y:n}
+            }
+            function y(p){
+                var t = p + (z()*2-1.1)*f;
+                return (t>h||t<0) ? y(p) : t
+            }
+            document.onclick = i;
+            document.ontouchstart = i;
+            i()
+    </script>
+</body>
+</html>
